@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Chat;
 use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
-
+use App\Events\MessageSent;
 
 class ChatController extends Controller
 {
@@ -37,4 +37,17 @@ class ChatController extends Controller
 
         return response()->json($messages);
     }
+
+    public function sendMessageEvent(Request $request, $chatId)
+{
+    $message = Message::create([
+        'chat_id' => $chatId,
+        'user_id' => Auth::id(),
+        'message' => $request->message,
+    ]);
+
+    broadcast(new MessageSent($message))->toOthers();
+
+    return response()->json($message);
+}
 }
