@@ -38,6 +38,13 @@ class UsersController extends Controller
         return $user;
     }
 
+    public function getUsers()
+    {
+        $users = User::where('type', 'user')->get();  // Assuming role column to differentiate users
+
+        return response()->json($users);
+    }
+
 
      /**
      * Display the login.

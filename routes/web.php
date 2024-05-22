@@ -5,6 +5,7 @@ use App\Http\Controllers\DocsController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,10 +32,16 @@ Route::middleware([
     Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
     Route::get('/schedules/create', [ScheduleController::class, 'create'])->name('schedules.create');
     Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');
-    Route::post('/chats', [ChatController::class, 'createChat']);
-    Route::post('/chats/{chatId}/messages', [ChatController::class, 'sendMessage']);
-    Route::get('/chats/{chatId}/messages', [ChatController::class, 'getMessages']);
-    Route::get('/doctor/chat', [ChatController::class, 'showChat']);
+    Route::post('/create-chat', [ChatController::class, 'createChat'])->name('start-chat');
+    Route::post('/send-message/{chatId}', [ChatController::class, 'sendMessage'])->name('send-message');
+    Route::get('/get-messages/{chatId}', [ChatController::class, 'getMessages']);
+    Route::get('/doctor/chat', [ChatController::class, 'showChat'])->name('show-chat');
+    Route::get('/', function () {
+        return view('chatpage');
+    })->name('get-chat');
 
+    Route::get('/get-users', [UsersController::class, 'getUsers']); 
+
+    
 
 });

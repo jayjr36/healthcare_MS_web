@@ -31,23 +31,23 @@ class ChatController extends Controller
         return response()->json($message);
     }
 
-    public function getMessages($chatId)
+    public function getMessages($doctorId, $patientId)
     {
-        $messages = Message::where('chat_id', $chatId)->with('user')->get();
+        $chat = Chat::where('doctor_id', $doctorId)
+                     ->where('patient_id', $patientId)
+                     ->firstOrFail();
+
+        $messages = Message::where('chat_id', $chat->id)
+                           ->with('user')
+                           ->get();
 
         return response()->json($messages);
     }
 
-    public function sendMessageEvent(Request $request, $chatId)
-{
-    $message = Message::create([
-        'chat_id' => $chatId,
-        'user_id' => Auth::id(),
-        'message' => $request->message,
-    ]);
+    // public function getMessages($chatId)
+    // {
+    //     $messages = Message::where('chat_id', $chatId)->with('user')->get();
 
-    broadcast(new MessageSent($message))->toOthers();
-
-    return response()->json($message);
-}
+    //     return response()->json($messages);
+    // }
 }

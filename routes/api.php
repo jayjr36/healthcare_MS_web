@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\DocsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,5 +28,9 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/appointments', [AppointmentsController::class, 'index']);
     Route::get('/doctor/schedules', [ScheduleController::class, 'getDoctorSchedules']);
     Route::get('/schedules', [ScheduleController::class, 'getAllDoctorSchedules']);
-
+    
+    Route::post('/create-chat', [ChatController::class, 'createChat']);
+    Route::post('/send-message/{chatId}', [ChatController::class, 'sendMessage']);
+    Route::get('/get-messages/{chatId}', [ChatController::class, 'getMessages']);
+    Route::get('/get-users', [UsersController::class, 'getUsers']);
 });

@@ -14,6 +14,9 @@
                     <a href="{{ route('schedules.index') }}" class="btn btn-primary">
                         Schedule
                     </a>
+                    <a href="{{ route('get-chat') }}" class="btn btn-primary">
+                        Messages
+                    </a>
                 </div>
                 <!-- Add your other dashboard content here -->
             </div>
