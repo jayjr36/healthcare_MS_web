@@ -11,7 +11,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2>Set Schedule</h2>
+            <h2 class="mb-4">Set Schedule</h2>
             @if($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -23,22 +23,24 @@
             @endif
             <form action="{{ route('schedules.store') }}" method="POST">
                 @csrf
-                <div class="form-group">
-                    <label for="date">Date</label>
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date</label>
                     <input type="date" name="date" id="date" class="form-control" required>
                 </div>
-                <div class="form-group">
-                    <label for="start_time">Start Time</label>
+                <div class="mb-3">
+                    <label for="start_time" class="form-label">Start Time</label>
                     <input type="time" name="start_time" id="start_time" class="form-control" required>
                 </div>
-                <div class="form-group">
-                    <label for="end_time">End Time</label>
+                <div class="mb-3">
+                    <label for="end_time" class="form-label">End Time</label>
                     <input type="time" name="end_time" id="end_time" class="form-control" required>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Set Schedule</button>
-                <a href="{{route('schedules.index')}}">VIEW </a>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-outline-danger">Add Schedule</button>
+                </div>
             </form>
         </div>
+        
     </div>
 </div>
 </body>

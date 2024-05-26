@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">My Appointments</h1>
+        <h2 class="mb-4 text-center">Appointments</h2>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -17,6 +17,7 @@
                     <th>Appointment Time</th>
                     <th>Patient Profile</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,11 +27,19 @@
                         <td>{{ $appointment->date }}</td>
                         <td>{{ $appointment->time }}</td>
                         <td><img src="{{ $appointment->patient_profile }}" alt="Patient Profile" width="50" height="50"></td>
-                        <td>{{  $appointment->status}}</td>
+                        <td>{{ $appointment->status }}</td>
+                        <td>
+                            <form action="{{ route('appointments.cancel', $appointment->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        
     </div>
 </body>
 </html>

@@ -56,4 +56,26 @@ class ScheduleController extends Controller
 
         return response()->json($schedules);
     }
+
+    public function edit(Schedule $schedule)
+{
+    return view('schedules.edit', compact('schedule'));
+}
+
+public function update(Request $request, Schedule $schedule)
+{
+    $request->validate([
+        'date' => 'required|date',
+        'start_time' => 'required|date_format:H:i',
+        'end_time' => 'required|date_format:H:i|after:start_time',
+    ]);
+
+    $schedule->update([
+        'date' => $request->input('date'),
+        'start_time' => $request->input('start_time'),
+        'end_time' => $request->input('end_time'),
+    ]);
+
+    return redirect()->route('schedules.index')->with('success', 'Schedule updated successfully.');
+}
 }

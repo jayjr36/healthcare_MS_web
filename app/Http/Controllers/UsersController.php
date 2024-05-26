@@ -97,6 +97,29 @@ class UsersController extends Controller
         return $user;
     }
 
+    public function indexChat()
+    {
+        $users = User::where('id', '!=', auth()->id())->get();
+        return view('users.index', compact('users'));
+    }
+    
+
+    public function apiIndex()
+    {
+        return User::all();
+    }
+
+    public function logout(Request $request)
+    {
+       // $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -33,4 +33,10 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('/send-message/{chatId}', [ChatController::class, 'sendMessage']);
     Route::get('/get-messages/{chatId}', [ChatController::class, 'getMessages']);
     Route::get('/get-users', [UsersController::class, 'getUsers']);
+
+
+Route::get('/users', [UsersController::class, 'apiIndex']);
+Route::get('/chats', [ChatController::class, 'apiIndex']);
+Route::get('/chats/{user}', [ChatController::class, 'apiShow']);
+Route::post('/chats/send', [ChatController::class, 'apiSend']);
 });

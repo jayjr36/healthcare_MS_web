@@ -77,6 +77,17 @@ class AppointmentsController extends Controller
         ], 200);
     }
 
+    public function cancel($id)
+{
+    $appointment = Appointments::find($id);
+    if ($appointment) {
+        $appointment->status = 'Cancelled';
+        $appointment->save();
+        return redirect()->route('appointments')->with('success', 'Appointment cancelled successfully.');
+    }
+    return redirect()->route('appointments')->with('error', 'Appointment not found.');
+}
+
     /**
      * Display the specified resource.
      */

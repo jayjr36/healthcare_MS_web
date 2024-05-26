@@ -11,29 +11,35 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h2>My Schedules</h2>
-            <a href="{{ route('schedules.create') }}" class="btn btn-primary mb-3">Set Schedule</a>
+            <h2 class="text-center">Schedules</h2>
+            <a href="{{ route('schedules.create') }}" class="btn btn-outline-danger float-right mb-3">Set Schedule</a>
             @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped" style="border-color: red;">
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Start Time</th>
                         <th>End Time</th>
+                        <th>Action</th> <!-- Add a new column for the Edit button -->
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($schedules as $schedule)
-                        <tr>
-                            <td>{{ $schedule->date }}</td>
-                            <td>{{ $schedule->start_time }}</td>
-                            <td>{{ $schedule->end_time }}</td>
-                        </tr>
+                    <tr>
+                        <td>{{ $schedule->date }}</td>
+                        <td>{{ $schedule->start_time }}</td>
+                        <td>{{ $schedule->end_time }}</td>
+                        <td>
+                            <a href="{{ route('schedules.edit', $schedule->id) }}" class="btn btn-outline-warning">Edit</a>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
+            
+            
         </div>
     </div>
 </div>
