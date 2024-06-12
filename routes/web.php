@@ -72,6 +72,4 @@ Route::get('/doctors', [DocsController::class, 'showDoctors'])->name('doctors.in
 Route::post('/doctors/{id}/toggle-verification', [DocsController::class, 'toggleVerification'])->name('doctors.toggle-verification');
 Route::post('/doctors/{id}/update-status', [DocsController::class, 'updateStatus'])->name('doctors.update-status');
 
-
-
 });

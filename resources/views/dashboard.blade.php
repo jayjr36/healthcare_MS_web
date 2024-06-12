@@ -13,6 +13,10 @@
                         <a href="{{ route('dashboardview') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Dashboard</a>
                     </div>
                     <div class="col">
+                        <a href="{{ route('doctors.index') }}" target="iframe"
+                            class="btn btn-outline-light btn-block mb-3">All Doctors</a>
+                    </div>
+                    <div class="col">
                         <a href="{{ route('appointments.create') }}" target="iframe"
                             class="btn btn-outline-light btn-block mb-3">Create Appointments</a>
                     </div>

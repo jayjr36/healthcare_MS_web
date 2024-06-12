@@ -114,7 +114,7 @@ class DocsController extends Controller
 
     public function showDoctors()
     {
-        $doctors = User::with('doctorDetail')->where('role', 'doctor')->get();
+        $doctors = User::with('doctor')->where('type', 'doctor')->get();
         return view('doctor.index', compact('doctors'));
     }
 

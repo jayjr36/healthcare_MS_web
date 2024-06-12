@@ -18,7 +18,7 @@ class AppointmentsController extends Controller
     public function index()
     {
         $appointments = Appointments::where('patient_id', Auth::user()->id)
-                                    ->where('status', 'upcoming')
+                                    // ->where('status', 'upcoming')
                                     ->get();
 
         foreach ($appointments as $appointment) {
@@ -129,8 +129,8 @@ class AppointmentsController extends Controller
 
 public function createAppointmentByAdmin()
 {
-    $doctors = User::where('role', 'doctor')->get();
-    $patients = User::where('role', 'patient')->get();
+    $doctors = User::where('type', 'doctor')->get();
+    $patients = User::where('type', 'user')->get();
     return view('appointments.create', compact('doctors', 'patients'));
 }
 
@@ -141,7 +141,7 @@ public function storeAppointmentByAdmin(Request $request)
         'doctor_id' => 'required|exists:users,id',
         'date' => 'required|date',
         'day' => 'required|string',
-        'status'=>'upcoming',
+        'status'=>'required|in:upcoming',
         'time' => 'required',
     ]);
 
