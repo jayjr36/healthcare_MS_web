@@ -5,6 +5,7 @@ use App\Http\Controllers\DocsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\PatientDetailsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,11 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('/book', [AppointmentsController::class, 'store']);
     Route::post('/reviews', [DocsController::class, 'store']);
     Route::get('/appointments', [AppointmentsController::class, 'index']);
+    Route::get('/appointments/canceled', [AppointmentsController::class, 'canceledAppointments']);
+    Route::get('/appointments/completed', [AppointmentsController::class, 'completedAppointments']);
+    
+    Route::patch('/appointments/{appointment}/cancel', [AppointmentsController::class, 'cancel']);
+
     Route::get('/doctor/schedules', [ScheduleController::class, 'getDoctorSchedules']);
     Route::get('/schedules', [ScheduleController::class, 'getAllDoctorSchedules']);
     
@@ -39,4 +45,9 @@ Route::get('/users', [UsersController::class, 'apiIndex']);
 Route::get('/chats', [ChatController::class, 'apiIndex']);
 Route::get('/chats/{user}', [ChatController::class, 'apiShow']);
 Route::post('/chats/send', [ChatController::class, 'apiSend']);
+
+Route::get('/show/patient-details', [PatientDetailsController::class, 'show']);
+Route::post('/store/patient-details', [PatientDetailsController::class, 'store']);
+Route::put('/update/patient-details', [PatientDetailsController::class, 'update']);
+
 });

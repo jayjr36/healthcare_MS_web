@@ -12,12 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('patient_details', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('patient_id')->unique();
-            $table->string('bio_data')->nullable();
-            $table->unsignedInteger('status')->nullable();
-            $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade');
+            $table->id();
+            $table->unsignedBigInteger('user_id')->unique();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('blood_group')->nullable();
+            $table->string('marital_status')->nullable();
+            $table->string('height')->nullable();
+            $table->string('weight')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+ 
         });
     }
 

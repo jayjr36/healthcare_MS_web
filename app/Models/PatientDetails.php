@@ -10,9 +10,17 @@ class PatientDetails extends Model
     use HasFactory;
 
     protected $fillable = [
-        'patient_id',        
-        'bio_data',
-        'status',
+        'user_id',
+        'first_name',
+        'last_name',
+        'email',
+        'contact_number',
+        'date_of_birth',
+        'gender',
+        'blood_group',
+        'marital_status',
+        'height',
+        'weight',
     ];
 
     public function user() {

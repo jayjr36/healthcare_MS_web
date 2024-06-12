@@ -64,4 +64,14 @@ Route::put('/schedules/{schedule}', [ScheduleController::class, 'update'])->name
 Route::patch('/appointments/{appointment}/cancel', [AppointmentsController::class, 'cancel'])->name('appointments.cancel');
 Route::post('/logout', [UsersController::class, 'logout'])->name('logout');
 
+Route::get('/appointments/create', [AppointmentsController::class, 'createAppointmentByAdmin'])->name('appointments.create');
+Route::post('/appointments', [AppointmentsController::class, 'storeAppointmentByAdmin'])->name('appointments.store');
+Route::get('/appointments', [AppointmentsController::class, 'indexAppointmentByAdmin'])->name('appointments.index');
+
+Route::get('/doctors', [DocsController::class, 'showDoctors'])->name('doctors.index');
+Route::post('/doctors/{id}/toggle-verification', [DocsController::class, 'toggleVerification'])->name('doctors.toggle-verification');
+Route::post('/doctors/{id}/update-status', [DocsController::class, 'updateStatus'])->name('doctors.update-status');
+
+
+
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Appointments;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,21 +17,59 @@ class AppointmentsController extends Controller
      */
     public function index()
     {
-        $appointment = Appointments::where('patient_id', Auth::user()->id)->get();
-        $doctor = User::where('type', 'doctor')->get();
+        $appointments = Appointments::where('patient_id', Auth::user()->id)
+                                    ->where('status', 'upcoming')
+                                    ->get();
 
-        foreach($appointment as $data) {
-            foreach($doctor as $info) {
-                $details = $info->doctor; 
-                if($data['doctor_id'] == $info['id']) {
-                    $data['doctor_name'] = $info['name'];
-                    $data['doctor_profile'] = $info['profile_photo_url'];
-                    $data['category'] = $details['category'];
-                }                
+        foreach ($appointments as $appointment) {
+            $doctor = User::find($appointment->doctor_id);
+            if ($doctor) {
+                $doctorDetail = $doctor->doctorDetail;
+                $appointment->doctor_name = $doctor->name;
+                $appointment->doctor_profile = $doctor->profile_photo_url;
+                $appointment->category = $doctorDetail->category ?? 'N/A';
             }
         }
 
-        return $appointment;
+        return $appointments;
+    }
+
+    public function canceledAppointments()
+    {
+        $appointments = Appointments::where('patient_id', Auth::user()->id)
+                                    ->where('status', 'cancelled')
+                                    ->get();
+
+        foreach ($appointments as $appointment) {
+            $doctor = User::find($appointment->doctor_id);
+            if ($doctor) {
+                $doctorDetail = $doctor->doctorDetail;
+                $appointment->doctor_name = $doctor->name;
+                $appointment->doctor_profile = $doctor->profile_photo_url;
+                $appointment->category = $doctorDetail->category ?? 'N/A';
+            }
+        }
+
+        return $appointments;
+    }
+
+    public function completedAppointments()
+    {
+        $appointments = Appointments::where('patient_id', Auth::user()->id)
+                                    ->where('status', 'completed')
+                                    ->get();
+
+        foreach ($appointments as $appointment) {
+            $doctor = User::find($appointment->doctor_id);
+            if ($doctor) {
+                $doctorDetail = $doctor->doctorDetail;
+                $appointment->doctor_name = $doctor->name;
+                $appointment->doctor_profile = $doctor->profile_photo_url;
+                $appointment->category = $doctorDetail->category ?? 'N/A';
+            }
+        }
+
+        return $appointments;
     }
 
     public function viewAppointments()
@@ -88,35 +127,32 @@ class AppointmentsController extends Controller
     return redirect()->route('appointments')->with('error', 'Appointment not found.');
 }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+public function createAppointmentByAdmin()
+{
+    $doctors = User::where('role', 'doctor')->get();
+    $patients = User::where('role', 'patient')->get();
+    return view('appointments.create', compact('doctors', 'patients'));
+}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+public function storeAppointmentByAdmin(Request $request)
+{
+    $request->validate([
+        'patient_id' => 'required|exists:users,id',
+        'doctor_id' => 'required|exists:users,id',
+        'date' => 'required|date',
+        'day' => 'required|string',
+        'status'=>'upcoming',
+        'time' => 'required',
+    ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    Appointments::create($request->all());
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    return redirect()->route('appointments.create')->with('success', 'Appointment created successfully.');
+}
+
+public function indexAppointmentByadmin()
+{
+    $appointments = Appointments::with(['patient', 'doctor'])->get();
+    return view('appointments.index', compact('appointments'));
+}
 }

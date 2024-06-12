@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reviews;
 use App\Models\Appointments;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\DoctorDetails;
 use Illuminate\Support\Facades\Auth;
@@ -24,14 +25,7 @@ class DocsController extends Controller
         return view('board')->with(['doctor'=>$doctor, 'appointments'=>$appointments, 'reviews'=>$reviews]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
+   
     /**
      * Store a newly created resource in storage.
      * 
@@ -51,7 +45,7 @@ class DocsController extends Controller
         $reviews->status = 'active';
         $reviews->save();
 
-        $appointment->status = "complete";
+        $appointment->status = "completed";
         $appointment->save();
 
         return response()->json([
@@ -118,35 +112,31 @@ class DocsController extends Controller
         return redirect()->route('doctor.profile')->with('success', 'Profile updated successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function showDoctors()
     {
-        //
+        $doctors = User::with('doctorDetail')->where('role', 'doctor')->get();
+        return view('doctor.index', compact('doctors'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function toggleVerification($id)
     {
-        //
+        $doctor = User::find($id);
+        if ($doctor) {
+            $doctor->verified = !$doctor->verified;
+            $doctor->save();
+            return redirect()->route('doctors.index')->with('success', 'Doctor verification status updated.');
+        }
+        return redirect()->route('doctors.index')->with('error', 'Doctor not found.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function updateStatus($id, Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $doctorDetail = DoctorDetails::where('doctor_id', $id)->first();
+        if ($doctorDetail) {
+            $doctorDetail->status = $request->input('status');
+            $doctorDetail->save();
+            return redirect()->route('doctors.index')->with('success', 'Doctor status updated.');
+        }
+        return redirect()->route('doctor.index')->with('error', 'Doctor details not found.');
     }
 }
