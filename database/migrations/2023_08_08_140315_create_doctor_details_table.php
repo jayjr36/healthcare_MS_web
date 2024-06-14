@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctor_details', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('doctor_id')->unique();
-            $table->string('category')->nullable();
-            $table->unsignedInteger('patients')->nullable();
-            $table->unsignedInteger('experience')->nullable();
-            $table->longText('bio_data')->nullable();
-            $table->string('status')->nullable();
-            $table->foreign('doctor_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamps();
-        });
+       
+    Schema::create('doctor_details', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('doctor_id')->unique(); // Use unsignedBigInteger for consistency with 'id' in 'users'
+        $table->string('category')->nullable();
+        $table->unsignedInteger('patients')->nullable();
+        $table->unsignedInteger('experience')->nullable();
+        $table->longText('bio_data')->nullable();
+        $table->string('status')->nullable();
+        $table->foreign('doctor_id')->references('id')->on('users')->onDelete('cascade');
+        $table->timestamps();
+    });
     }
 
     /**
