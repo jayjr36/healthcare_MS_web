@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\AppointmentsController;
-use App\Http\Controllers\DocsController;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\ChatController;
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\PatientDetailsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DocsController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\VideoCallController;
+use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\PatientDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,5 +50,9 @@ Route::post('/chats/send', [ChatController::class, 'apiSend']);
 Route::get('/show/patient-details', [PatientDetailsController::class, 'show']);
 Route::post('/store/patient-details', [PatientDetailsController::class, 'store']);
 Route::put('/update/patient-details', [PatientDetailsController::class, 'update']);
+
+Route::post('/start-call', [VideoCallController::class, 'startCall']);
+Route::post('/end-call', [VideoCallController::class, 'endCall']);
+
 
 });

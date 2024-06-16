@@ -34,6 +34,9 @@
                         <a href="{{ route('doctor.profile') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Profile</a>
                     </div>
                     <div class="col">
+                        <a href="{{ route('videocall') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Video Call</a>
+                    </div>
+                    <div class="col">
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="ml-auto">
                             @csrf
                             <button type="submit" class="btn btn-outline-light btn-block mb-3">Logout</button>

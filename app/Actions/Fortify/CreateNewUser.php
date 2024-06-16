@@ -37,7 +37,7 @@ class CreateNewUser implements CreatesNewUsers
     
         $doctorInfo = DoctorDetails::create([
             'doctor_id' => $user->id,
-            'status' => 'active'
+            'status' => 'not verified'
         ]);
         
         return $user;
