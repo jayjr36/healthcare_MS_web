@@ -12,6 +12,7 @@
                     <div class="col">
                         <a href="{{ route('dashboardview') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Dashboard</a>
                     </div>
+                    @if(auth()->user()->type === 'admin')
                     <div class="col">
                         <a href="{{ route('doctors.index') }}" target="iframe"
                             class="btn btn-outline-light btn-block mb-3">All Doctors</a>
@@ -19,6 +20,12 @@
                     <div class="col">
                         <a href="{{ route('appointments.create') }}" target="iframe"
                             class="btn btn-outline-light btn-block mb-3">Create Appointments</a>
+                    </div>
+                  
+                    @endif
+                    <div class="col">
+                        <a href="{{ route('admin.dashboard') }}" target="iframe"
+                            class="btn btn-outline-light btn-block mb-3">ADMIN DASHBOARD</a>
                     </div>
                     <div class="col">
                         <a href="{{ route('doctor.appointments') }}" target="iframe"

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();           
-            $table->unsignedBigInteger('patient_id'); // Use unsignedBigInteger to match 'id' in 'users'
-            $table->unsignedBigInteger('doctor_id'); // Similarly for 'doctor_id'
+            $table->unsignedBigInteger('patient_id'); 
+            $table->unsignedBigInteger('doctor_id'); 
             $table->string('date');
             $table->string('day');
             $table->string('time');

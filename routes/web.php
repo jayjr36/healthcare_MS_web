@@ -1,15 +1,16 @@
 <?php
 namespace App\Http\Controllers\Auth;
 
+use Laravel\Fortify\Fortify;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DocsController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ScheduleController;
+//use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\VideoCallController;
 use App\Http\Controllers\AppointmentsController;
-//use Illuminate\Support\Facades\Auth;
-use Laravel\Fortify\Fortify;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +74,8 @@ Route::middleware([
     return view('videocall');
     })->name('videocall');
 });
+
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::get('/admin/doctors', [AdminController::class, 'doctors'])->name('admin.doctors');
+Route::get('/admin/appointments', [AdminController::class, 'appointments'])->name('admin.appointments');
+Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');

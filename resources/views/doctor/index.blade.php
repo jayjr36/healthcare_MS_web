@@ -20,10 +20,8 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Category</th>
-                    <th>Patients</th>
                     <th>Experience</th>
                     <th>Status</th>
-                    <th>Verified</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -32,18 +30,11 @@
                     <tr>
                         <td>{{ $doctor->name }}</td>
                         <td>{{ $doctor->email }}</td>
-                        <td>{{ $doctor->doctorDetail->category ?? 'N/A' }}</td>
-                        <td>{{ $doctor->doctorDetail->patients ?? 'N/A' }}</td>
-                        <td>{{ $doctor->doctorDetail->experience ?? 'N/A' }}</td>
-                        <td>{{ $doctor->doctorDetail->status ?? 'N/A' }}</td>
-                        <td>{{ $doctor->verified ? 'Yes' : 'No' }}</td>
+                        <td>{{ $doctor->doctor->category ?? 'N/A' }}</td>
+                        <td>{{ $doctor->doctor->experience ?? 'N/A' }}</td>
+                        <td>{{ $doctor->doctor->status ?? 'N/A' }}</td>
                         <td>
-                            <form action="{{ route('doctors.toggle-verification', $doctor->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-{{ $doctor->verified ? 'danger' : 'success' }}">
-                                    {{ $doctor->verified ? 'Unverify' : 'Verify' }}
-                                </button>
-                            </form>
+                           
                             <form action="{{ route('doctors.update-status', $doctor->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 <input type="text" name="status" class="form-control form-control-sm d-inline w-auto" placeholder="Status">
