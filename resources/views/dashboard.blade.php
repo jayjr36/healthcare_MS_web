@@ -13,6 +13,11 @@
                         <a href="{{ route('dashboardview') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Dashboard</a>
                     </div>
                     @if(auth()->user()->type === 'admin')
+                    
+                    <div class="col">
+                        <a href="{{ route('admin.dashboard') }}" target="iframe"
+                            class="btn btn-outline-light btn-block mb-3">Dashboard</a>
+                    </div>
                     <div class="col">
                         <a href="{{ route('doctors.index') }}" target="iframe"
                             class="btn btn-outline-light btn-block mb-3">All Doctors</a>
@@ -21,12 +26,7 @@
                         <a href="{{ route('appointments.create') }}" target="iframe"
                             class="btn btn-outline-light btn-block mb-3">Create Appointments</a>
                     </div>
-                  
-                    @endif
-                    <div class="col">
-                        <a href="{{ route('admin.dashboard') }}" target="iframe"
-                            class="btn btn-outline-light btn-block mb-3">ADMIN DASHBOARD</a>
-                    </div>
+                     @endif
                     <div class="col">
                         <a href="{{ route('doctor.appointments') }}" target="iframe"
                             class="btn btn-outline-light btn-block mb-3">Appointments</a>
@@ -52,7 +52,13 @@
                 </div>
             </div>
             <div class="col-8">
+                @if(auth()->user()->type === 'doctor')
              <iframe src="{{route('dashboardview')}}" frameborder="0" name="iframe"  style="height:100vh; width: 100%"></iframe>
+            @endif
+             @if(auth()->user()->type === 'admin')
+             <iframe src="{{route('admin.dashboard')}}" frameborder="0" name="iframe"  style="height:100vh; width: 100%"></iframe>
+      
+             @endif
             </div>
         </div>
     </div>

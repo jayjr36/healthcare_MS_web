@@ -122,9 +122,9 @@ class AppointmentsController extends Controller
     if ($appointment) {
         $appointment->status = 'Cancelled';
         $appointment->save();
-        return redirect()->route('appointments')->with('success', 'Appointment cancelled successfully.');
+        return redirect()->route('doctor.appointments')->with('success', 'Appointment cancelled successfully.');
     }
-    return redirect()->route('appointments')->with('error', 'Appointment not found.');
+    return redirect()->route('doctor.appointments')->with('error', 'Appointment not found.');
 }
 
 public function createAppointmentByAdmin()
