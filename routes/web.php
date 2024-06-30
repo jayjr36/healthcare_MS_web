@@ -73,9 +73,11 @@ Route::middleware([
     Route::get('/video-call', function () {
     return view('videocall');
     })->name('videocall');
-});
 
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/admin/doctors', [AdminController::class, 'doctors'])->name('admin.doctors');
 Route::get('/admin/appointments', [AdminController::class, 'appointments'])->name('admin.appointments');
 Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+
+});
+
