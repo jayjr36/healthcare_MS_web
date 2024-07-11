@@ -23,36 +23,33 @@ use App\Http\Controllers\PatientDetailsController;
 
 Route::post('/login', [UsersController::class, 'login']);
 Route::post('/register', [UsersController::class, 'register']);
-Route::middleware('auth:sanctum')->group(function() {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UsersController::class, 'index']);
     Route::post('/book', [AppointmentsController::class, 'store']);
     Route::post('/reviews', [DocsController::class, 'store']);
     Route::get('/appointments', [AppointmentsController::class, 'index']);
     Route::get('/appointments/canceled', [AppointmentsController::class, 'canceledAppointments']);
     Route::get('/appointments/completed', [AppointmentsController::class, 'completedAppointments']);
-    
-    Route::patch('/appointments/{appointment}/cancel', [AppointmentsController::class, 'cancel']);
+
+    Route::patch('/appointments/{appointment}/cancel', [AppointmentsController::class, 'cancelApi']);
 
     Route::get('/doctor/schedules', [ScheduleController::class, 'getDoctorSchedules']);
     Route::get('/schedules', [ScheduleController::class, 'getAllDoctorSchedules']);
-    
+
     Route::post('/create-chat', [ChatController::class, 'createChat']);
     Route::post('/send-message/{chatId}', [ChatController::class, 'sendMessage']);
     Route::get('/get-messages/{chatId}', [ChatController::class, 'getMessages']);
     Route::get('/get-users', [UsersController::class, 'getUsers']);
 
+    Route::get('/users', [UsersController::class, 'apiIndex']);
+    Route::get('/chats', [ChatController::class, 'apiIndex']);
+    Route::get('/chats/{user}', [ChatController::class, 'apiShow']);
+    Route::post('/chats/send', [ChatController::class, 'apiSend']);
 
-Route::get('/users', [UsersController::class, 'apiIndex']);
-Route::get('/chats', [ChatController::class, 'apiIndex']);
-Route::get('/chats/{user}', [ChatController::class, 'apiShow']);
-Route::post('/chats/send', [ChatController::class, 'apiSend']);
+    Route::get('/show/patient-details', [PatientDetailsController::class, 'show']);
+    Route::post('/store/patient-details', [PatientDetailsController::class, 'store']);
+    Route::put('/update/patient-details', [PatientDetailsController::class, 'update']);
 
-Route::get('/show/patient-details', [PatientDetailsController::class, 'show']);
-Route::post('/store/patient-details', [PatientDetailsController::class, 'store']);
-Route::put('/update/patient-details', [PatientDetailsController::class, 'update']);
-
-Route::post('/start-call', [VideoCallController::class, 'startCall']);
-Route::post('/end-call', [VideoCallController::class, 'endCall']);
-
-
+    Route::post('/start-call', [VideoCallController::class, 'startCall']);
+    Route::post('/end-call', [VideoCallController::class, 'endCall']);
 });

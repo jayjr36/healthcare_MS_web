@@ -30,7 +30,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Handle sending messages
             $('#sendMessage').on('submit', function(e) {
                 e.preventDefault();
                 let message = $('#messageInput').val();
@@ -84,7 +83,7 @@
                 });
             }
 
-            setInterval(fetchMessages, 1000);
+            setInterval(fetchMessages, 500);
         });
     </script>
     

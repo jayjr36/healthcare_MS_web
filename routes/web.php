@@ -11,6 +11,8 @@ use App\Http\Controllers\ScheduleController;
 //use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\VideoCallController;
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\ConsultationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +80,14 @@ Route::middleware([
 Route::get('/admin/doctors', [AdminController::class, 'doctors'])->name('admin.doctors');
 Route::get('/admin/appointments', [AdminController::class, 'appointments'])->name('admin.appointments');
 Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+
+
+
+Route::get('/consultation/create', [ConsultationController::class, 'create'])->name('consultation.create');
+Route::post('/consultation', [ConsultationController::class, 'store'])->name('consultation.store');
+
+Route::get('/consultations', [ConsultationController::class, 'index'])->name('consultation.index');
+Route::get('/consultation/{id}', [ConsultationController::class, 'show'])->name('consultation.show');
 
 });
 

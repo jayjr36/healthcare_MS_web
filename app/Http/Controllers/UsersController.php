@@ -24,9 +24,9 @@ class UsersController extends Controller
         $doctor = User::where('type', 'doctor')->get();
         $doctorData = DoctorDetails::all();
 
-        foreach($doctorData as $data){
-            foreach($doctor as $info){
-                if($data['doctor_id'] == $info['id']){
+        foreach ($doctorData as $data) {
+            foreach ($doctor as $info) {
+                if ($data['doctor_id'] == $info['id']) {
                     $data['doctor_name'] = $info['name'];
                     $data['doctor_profile'] = $info['profile_photo_url'];
                 }
@@ -46,7 +46,7 @@ class UsersController extends Controller
     }
 
 
-     /**
+    /**
      * Display the login.
      * 
      * @return \Illuminate\Http\Response
@@ -54,15 +54,15 @@ class UsersController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email'=>'required|email',
-            'password'=>'required',
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
-        
+
         $user = User::where('email', $request->email)->first();
 
-        if(!$user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages ([
-                'email'=>['The provided credentials are incorrect'],
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect'],
             ]);
         }
 
@@ -77,21 +77,21 @@ class UsersController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name'=>'required|string',
-            'email'=>'required|email',
-            'password'=>'required',
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
         $user = User::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'type'=>'user',
-            'password'=>Hash::make($request->password),
+            'name' => $request->name,
+            'email' => $request->email,
+            'type' => 'user',
+            'password' => Hash::make($request->password),
         ]);
 
         $userInfo = PatientDetails::create([
-            'patient_id'=>$user->id,
-            'status'=>'active',
+            'patient_id' => $user->id,
+            'status' => 'active',
         ]);
 
         return $user;
@@ -102,16 +102,26 @@ class UsersController extends Controller
         $users = User::where('id', '!=', auth()->id())->get();
         return view('users.index', compact('users'));
     }
-    
+
+
+    // public function apiIndex()
+    // {
+    //     return User::where('type', 'doctor')->get();
+    // }
 
     public function apiIndex()
-    {
-        return User::all();
-    }
+{
+    return User::where('type', 'doctor')
+               ->join('doctor_details', 'users.id', '=', 'doctor_details.doctor_id')
+               ->where('doctor_details.status', 'verified')
+               ->select('users.*')
+               ->get();
+}
+
 
     public function logout(Request $request)
     {
-       // $this->guard()->logout();
+        // $this->guard()->logout();
 
         $request->session()->invalidate();
 

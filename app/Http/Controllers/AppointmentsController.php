@@ -127,6 +127,18 @@ class AppointmentsController extends Controller
     return redirect()->route('doctor.appointments')->with('error', 'Appointment not found.');
 }
 
+public function cancelApi($id)
+{
+    $appointment = Appointments::find($id);
+    if ($appointment) {
+        $appointment->status = 'Cancelled';
+        $appointment->save();
+        return response()->json(['success' => 'Appointment cancelled successfully.'], 200);
+    }
+    return response()->json(['error' => 'Appointment not found.'], 404);
+}
+
+
 public function createAppointmentByAdmin()
 {
     $doctors = User::where('type', 'doctor')->get();

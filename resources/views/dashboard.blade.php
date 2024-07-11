@@ -31,6 +31,9 @@
                             <a href="{{ route('doctor.appointments') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Appointments</a>
                         </div>
                         <div class="col">
+                            <a href="{{ route('consultation.create') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Record</a>
+                        </div>
+                        <div class="col">
                             <a href="{{ route('schedules.index') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Schedule</a>
                         </div>
                         <div class="col">
@@ -44,6 +47,10 @@
                         </div>
                     @endif
                 @endif
+
+                <div class="col">
+                    <a href="{{ route('consultation.index') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">REPORT</a>
+                </div>
 
                 <div class="col">
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="ml-auto">
