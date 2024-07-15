@@ -139,4 +139,15 @@ class DocsController extends Controller
         }
         return redirect()->route('doctor.index')->with('error', 'Doctor details not found.');
     }
+
+    public function destroy($id)
+{
+    try {
+        $doctor = DoctorDetails::findOrFail($id);
+        $doctor->delete();
+        return redirect()->route('admin.dashboard')->with('success', 'Doctor deleted successfully.');
+    } catch (\Exception $e) {
+        return redirect()->route('admin.dashboard')->with('error', 'Failed to delete doctor: ' . $e->getMessage());
+    }
+}
 }

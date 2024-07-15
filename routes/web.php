@@ -89,5 +89,7 @@ Route::post('/consultation', [ConsultationController::class, 'store'])->name('co
 Route::get('/consultations', [ConsultationController::class, 'index'])->name('consultation.index');
 Route::get('/consultation/{id}', [ConsultationController::class, 'show'])->name('consultation.show');
 
+Route::delete('/doctors/{id}', [DocsController::class, 'destroy'])->name('doctors.destroy');
+
 });
 

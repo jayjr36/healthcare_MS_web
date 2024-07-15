@@ -31,7 +31,7 @@
                             <a href="{{ route('doctor.appointments') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Appointments</a>
                         </div>
                         <div class="col">
-                            <a href="{{ route('consultation.create') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Record</a>
+                            <a href="{{ route('consultation.create') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Consultation Report</a>
                         </div>
                         <div class="col">
                             <a href="{{ route('schedules.index') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">Schedule</a>
@@ -49,7 +49,7 @@
                 @endif
 
                 <div class="col">
-                    <a href="{{ route('consultation.index') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">REPORT</a>
+                    <a href="{{ route('consultation.index') }}" target="iframe" class="btn btn-outline-light btn-block mb-3">ALL REPORTS</a>
                 </div>
 
                 <div class="col">
