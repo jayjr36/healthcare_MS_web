@@ -143,7 +143,7 @@ class DocsController extends Controller
     public function destroy($id)
 {
     try {
-        $doctor = DoctorDetails::findOrFail($id);
+        $doctor = User::where('id', $id)->first();
         $doctor->delete();
         return redirect()->route('admin.dashboard')->with('success', 'Doctor deleted successfully.');
     } catch (\Exception $e) {

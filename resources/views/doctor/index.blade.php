@@ -9,9 +9,15 @@
         <h1 class="mb-4">Doctors</h1>
 
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @elseif(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
 
         <table class="table table-striped">
@@ -34,11 +40,16 @@
                         <td>{{ $doctor->doctor->experience ?? 'N/A' }}</td>
                         <td>{{ $doctor->doctor->status ?? 'N/A' }}</td>
                         <td>
-                           
                             <form action="{{ route('doctors.update-status', $doctor->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 <input type="text" name="status" class="form-control form-control-sm d-inline w-auto" placeholder="Status">
                                 <button type="submit" class="btn btn-sm btn-primary">Update Status</button>
+                            </form>
+
+                            <form action="{{ route('doctors.destroy', $doctor->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this doctor?')">Delete</button>
                             </form>
                         </td>
                     </tr>
