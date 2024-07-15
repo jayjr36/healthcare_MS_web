@@ -23,6 +23,7 @@ use App\Http\Controllers\PatientDetailsController;
 
 Route::post('/login', [UsersController::class, 'login']);
 Route::post('/register', [UsersController::class, 'register']);
+Route::patch('/appointments/{appointment}/cancel', [AppointmentsController::class, 'cancelApi']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UsersController::class, 'index']);
     Route::post('/book', [AppointmentsController::class, 'store']);
@@ -31,7 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/appointments/canceled', [AppointmentsController::class, 'canceledAppointments']);
     Route::get('/appointments/completed', [AppointmentsController::class, 'completedAppointments']);
 
-    Route::patch('/appointments/{appointment}/cancel', [AppointmentsController::class, 'cancelApi']);
 
     Route::get('/doctor/schedules', [ScheduleController::class, 'getDoctorSchedules']);
     Route::get('/schedules', [ScheduleController::class, 'getAllDoctorSchedules']);

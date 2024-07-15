@@ -129,13 +129,18 @@ class AppointmentsController extends Controller
 
 public function cancelApi($id)
 {
-    $appointment = Appointments::find($id);
-    if ($appointment) {
-        $appointment->status = 'Cancelled';
-        $appointment->save();
-        return response()->json(['success' => 'Appointment cancelled successfully.'], 200);
+    try {
+        $appointment = Appointments::find($id);
+        if ($appointment) {
+            $appointment->status = 'Cancelled';
+            $appointment->save();
+            return response()->json(['success' => 'Appointment cancelled successfully.'], 200);
+        } else {
+            return response()->json(['error' => 'Appointment not found.'], 404);
+        }
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Failed to cancel appointment', 'message' => $e->getMessage()], 500);
     }
-    return response()->json(['error' => 'Appointment not found.'], 404);
 }
 
 

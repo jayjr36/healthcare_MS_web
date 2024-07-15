@@ -13,28 +13,33 @@ class PatientDetailsController extends Controller
         return response()->json($patientDetails);
     }
 
-        public function store(Request $request)
-        {
-            $request->validate([
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
-                'contact_number' => 'required|string|max:15',
-                'date_of_birth' => 'required|date',
-                'gender' => 'required|string|max:10',
-                'blood_group' => 'required|string|max:3',
-                'marital_status' => 'required|string|max:10',
-                'height' => 'string|max:5',
-                'weight' => 'string|max:5',
-            ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'contact_number' => 'required|string|max:15',
+            'date_of_birth' => 'required|date',
+            'gender' => 'required|string|max:10',
+            'blood_group' => 'required|string|max:3',
+            'marital_status' => 'required|string|max:10',
+            'height' => 'string|max:5',
+            'weight' => 'string|max:5',
+        ]);
     
+        try {
             $patientDetails = PatientDetails::updateOrCreate(
                 ['user_id' => Auth::id()],
                 $request->all()
             );
     
             return response()->json($patientDetails, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to store patient details', 'message' => $e->getMessage()], 500);
         }
+    }
+    
     
 
     public function update(Request $request)
