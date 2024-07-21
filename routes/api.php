@@ -23,7 +23,11 @@ use App\Http\Controllers\PatientDetailsController;
 
 Route::post('/login', [UsersController::class, 'login']);
 Route::post('/register', [UsersController::class, 'register']);
+
+Route::get('/doctors/{doctorId}/review-count', [DocsController::class, 'getDoctorReviewCount']);
 Route::patch('/appointments/{appointment}/cancel', [AppointmentsController::class, 'cancelApi']);
+Route::get('/all/reviews', [DocsController::class, 'getAllReviews']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UsersController::class, 'index']);
     Route::post('/book', [AppointmentsController::class, 'store']);

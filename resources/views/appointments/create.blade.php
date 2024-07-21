@@ -5,8 +5,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Create Appointment</h1>
+    <div class="container mt-5 col-8">
+        <h1 class="mb-4 text-center">Create Appointment</h1>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -53,7 +53,7 @@
                 <input type="text" name="status" id="status" class="form-control" value="upcoming" readonly>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create Appointment</button>
+            <button type="submit" class="btn btn-primary text-center">Create Appointment</button>
         </form>
     </div>
 

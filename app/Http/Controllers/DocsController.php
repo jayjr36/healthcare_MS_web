@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\DoctorDetails;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DocsController extends Controller
 {
@@ -25,6 +26,47 @@ class DocsController extends Controller
         return view('board')->with(['doctor'=>$doctor, 'appointments'=>$appointments, 'reviews'=>$reviews]);
     }
 
+    public function getAllReviews()
+    {
+        try {
+            $reviews = Reviews::with(['user', 'doctor'])
+                ->get()
+                ->map(function ($review) {
+                    return [
+                        'review_id' => $review->id,
+                        'ratings' => $review->ratings,
+                        'reviews' => $review->reviews,
+                        'doctor_name' => $review->doctor ? $review->doctor->user->name : 'Unknown',
+                        'patient_name' => $review->user ? $review->user->name : 'Unknown',
+                    ];
+                });
+
+            return response()->json($reviews, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    
+
+    public function getDoctorReviewCount($doctorId)
+    {
+        // Use logging instead of print for debugging
+       // print("Fetching reviews for doctor ID: $doctorId");
+    
+        $doctor = DoctorDetails::find($doctorId);
+    
+        if (!$doctor) {
+          //  print("Doctor not found for ID: $doctorId");
+            return response()->json(['error' => 'Doctor not found'], 404);
+        }
+    
+        $reviewCount = Reviews::where('doctor_id', $doctorId)->count();
+       // print("Review count for doctor ID $doctorId: $reviewCount");
+    
+        return response()->json(['review_count' => $reviewCount]);
+    }
+    
+    
    
     /**
      * Store a newly created resource in storage.
@@ -114,9 +156,13 @@ class DocsController extends Controller
 
     public function showDoctors()
     {
-        $doctors = User::with('doctor')->where('type', 'doctor')->get();
+        $doctors = User::with('doctor')
+            ->where('type', 'doctor')
+            ->where('email', '!=', 'admin@gmail.com')
+            ->get();
         return view('doctor.index', compact('doctors'));
     }
+    
 
     public function toggleVerification($id)
     {

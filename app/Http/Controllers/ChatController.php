@@ -119,7 +119,8 @@ class ChatController extends Controller
     }
 
     public function fetchMessages($userId) {
-        $messages = Message::where(function($query) use ($userId) {
+        // Fetch messages for the current user and the specified user
+        $messages = Message::where(function($query) {
                             $query->where('receiver_id', auth()->id())
                                   ->orWhere('sender_id', auth()->id());
                         })
@@ -129,13 +130,8 @@ class ChatController extends Controller
                         })
                         ->orderBy('created_at', 'asc')
                         ->get();
-    
-        $user = User::findOrFail($userId);
-    
-        return view('chats.show', compact('messages', 'user'));
+        
+        // Return messages as JSON
+        return response()->json($messages);
     }
-    
-    
-    
-
 }

@@ -91,5 +91,7 @@ Route::get('/consultation/{id}', [ConsultationController::class, 'show'])->name(
 
 Route::delete('/doctors/{id}', [DocsController::class, 'destroy'])->name('doctors.destroy');
 
+Route::get('/admin/appointments/download', [AdminController::class, 'downloadAppointments'])->name('admin.appointments.download');
+
 });
 

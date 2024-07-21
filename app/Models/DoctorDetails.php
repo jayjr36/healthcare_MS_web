@@ -21,4 +21,8 @@ class DoctorDetails extends Model
     {
         return $this->belongsTo(User::class, 'doctor_id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Reviews::class, 'doctor_id');
+    }
 }

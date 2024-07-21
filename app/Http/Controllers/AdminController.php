@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\DoctorDetails;
 use App\Models\Appointment;
 use App\Models\Appointments;
+use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -15,11 +17,22 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function doctors()
-    {
-        $doctors = DoctorDetails::with('user')->get();
-        return view('admin.doctors', compact('doctors'));
+    public function downloadAppointments() {
+        $appointments = Appointments::with(['patient', 'doctor'])->get();
+        $pdf = PDF::loadView('admin.appointments_pdf', compact('appointments'));
+        return $pdf->download('appointments.pdf');
     }
+
+// app/Http/Controllers/AdminController.php
+
+public function doctors()
+{
+    $appointments = Appointments::all();
+    return view('admin.doctors', compact('appointments'));
+}
+
+
+ 
 
     public function appointments()
     {

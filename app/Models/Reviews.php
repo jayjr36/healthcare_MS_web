@@ -18,7 +18,13 @@ class Reviews extends Model
         'status',
     ];
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function doctor()
+    {
+        return $this->belongsTo(DoctorDetails::class, 'doctor_id', 'doctor_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
