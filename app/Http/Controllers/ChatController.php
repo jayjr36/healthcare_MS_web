@@ -71,8 +71,12 @@ class ChatController extends Controller
                                   ->where('receiver_id', Auth::id());
                         })
                         ->get();
-        return view('chats.show', compact('user', 'messages'));
+    
+        return response()->json([
+            'messages' => $messages,
+        ]);
     }
+    
 
     public function apiIndex()
     {
