@@ -71,12 +71,8 @@ class ChatController extends Controller
                                   ->where('receiver_id', Auth::id());
                         })
                         ->get();
-    
-        return response()->json([
-            'messages' => $messages,
-        ]);
+        return view('chats.show', compact('user', 'messages'));
     }
-    
 
     public function apiIndex()
     {
@@ -122,20 +118,37 @@ class ChatController extends Controller
         return response()->json($message);
     }
 
+    // public function show($userId) {
+    //     // Render the chat view with the necessary data
+    //     $user = User::findOrFail($userId);
+    //     $messages = Message::where(function($query) use ($userId) {
+    //                             $query->where('receiver_id', auth()->id())
+    //                                   ->orWhere('sender_id', auth()->id());
+    //                         })
+    //                         ->where(function($query) use ($userId) {
+    //                             $query->where('receiver_id', $userId)
+    //                                   ->orWhere('sender_id', $userId);
+    //                         })
+    //                         ->orderBy('created_at', 'asc')
+    //                         ->get();
+    
+    //     return view('chat.show', compact('user', 'messages'));
+    // }
+    
     public function fetchMessages($userId) {
         // Fetch messages for the current user and the specified user
         $messages = Message::where(function($query) {
-                            $query->where('receiver_id', auth()->id())
-                                  ->orWhere('sender_id', auth()->id());
-                        })
-                        ->where(function($query) use ($userId) {
-                            $query->where('receiver_id', $userId)
-                                  ->orWhere('sender_id', $userId);
-                        })
-                        ->orderBy('created_at', 'asc')
-                        ->get();
+                                $query->where('receiver_id', auth()->id())
+                                      ->orWhere('sender_id', auth()->id());
+                            })
+                            ->where(function($query) use ($userId) {
+                                $query->where('receiver_id', $userId)
+                                      ->orWhere('sender_id', $userId);
+                            })
+                            ->orderBy('created_at', 'asc')
+                            ->get();
         
-        // Return messages as JSON
         return response()->json($messages);
     }
+    
 }

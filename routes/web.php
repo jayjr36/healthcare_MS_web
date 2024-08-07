@@ -48,9 +48,9 @@ Route::middleware([
 
     Route::get('/users', [UsersController::class, 'indexChat'])->name('users.index');
     Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
-    //Route::get('/chats/{user}', [ChatController::class, 'show'])->name('chats.show');
+    Route::get('/chats/{user}', [ChatController::class, 'show'])->name('chats.show');
     Route::post('/chats/send', [ChatController::class, 'send'])->name('chats.send');
-    Route::get('chats/{userId}', [ChatController::class, 'fetchMessages'])->name('chats.show');
+    Route::get('chats/{userId}', [ChatController::class, 'fetchMessages'])->name('chats.messages');
 
 
     Route::get('/profile', [DocsController::class, 'showProfile'])->name('doctor.profile');

@@ -61,7 +61,7 @@
         // Function to fetch messages
         function fetchMessages() {
             $.ajax({
-                url: "{{ route('chats.show', $user->id) }}",
+                url: "{{ route('chats.messages', $user->id) }}",
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
