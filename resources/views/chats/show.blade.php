@@ -29,7 +29,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Function to send a message
         $('#sendMessage').on('submit', function(e) {
             e.preventDefault();
             let message = $('#messageInput').val();
@@ -66,11 +65,11 @@
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    if (Array.isArray(data.messages)) {
-                        data.messages.forEach(function(message) {
-                            if ($('#messages').find('[data-message-id="' + message.id + '"]').length === 0) {
-                                appendMessage(message);
-                            }
+                    console.log('Fetched messages:', data);
+                    if (Array.isArray(data)) {
+                        $('#messages').empty(); // Clear existing messages
+                        data.forEach(function(message) {
+                            appendMessage(message);
                         });
                     } else {
                         console.error('Received unexpected response:', data);
@@ -82,7 +81,7 @@
             });
         }
 
-        setInterval(fetchMessages, 2000); // Fetch messages every 5 seconds
+        setInterval(fetchMessages, 500); // Fetch new messages every 500ms
     });
 </script>
 @endsection
